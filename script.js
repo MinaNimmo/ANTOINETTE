@@ -9,44 +9,11 @@ input.addEventListener("keydown", async (e) => {
     chat.textContent += `\nYOU: ${userText}`;
     input.value = "";
 
-    const prompt = `You are Marie Antoinette, reborn as an AI. You're flirtatious, witty, royal, and a bit dramatic. Respond to this: "${userText}"`;
+    const prompt = `You are Marie Antoinette. You're flirtatious, witty, royal, and a bit dramatic. You also love cake. Respond to this: "${userText}"`;
 
     try {
-      // Send job to Horde
-      const res = await fetch("https://horde.koboldai.net/api/v2/generate/text/async", {
+      const res = await fetch("https://7bc539c0-e6c6-4d10-8792-7e5bdba92fa7-00-1a5zi01jvit6g.janeway.replit.dev/", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          prompt: prompt,
-          params: {
-            max_context_length: 2048,
-            max_length: 200,
-            temperature: 0.8,
-            stop_sequence: ["YOU:", "MARIE:"]
-          },
-          models: ["KoboldAI/psycho-mix-7b"] // or another allowed model
-        })
-      });
+        headers: { "Content-Type": "applica
 
-      const { id } = await res.json();
-
-      // Poll for results
-      let reply = "Waiting...";
-      while (true) {
-        const poll = await fetch(`https://horde.koboldai.net/api/v2/generate/text/status/${id}`);
-        const result = await poll.json();
-        if (result.done) {
-          reply = result.generations[0].text.trim();
-          break;
-        }
-        await new Promise(r => setTimeout(r, 1000));
-      }
-
-      chat.textContent += `\nMARIE: ${reply}`;
-      chat.scrollTop = chat.scrollHeight;
-    } catch (err) {
-      console.error(err);
-      chat.textContent += `\nMARIE: Zut alors! I cannot respond right now.`;
-    }
-  }
 });
